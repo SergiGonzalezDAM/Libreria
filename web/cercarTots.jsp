@@ -18,7 +18,7 @@
             <%      
               GestioLlibres g = new GestioLlibres();
               List<Llibre> llibres = g.cercarTots();
-                //llistat de persones
+                //listado de libros
                 for (Llibre l : llibres) {
                     out.println("<li>"+l.getAutor() +"  "+l.getEditorial()+"  "+l.getIsbn()+"  "+l.getTitol()+"  "+l.getAnyEdicio()+"  "+l.getEstoc()+"</li>");
                 }
