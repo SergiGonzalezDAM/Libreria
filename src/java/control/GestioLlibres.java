@@ -2,6 +2,7 @@ package control;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -9,10 +10,12 @@ import model.*;
 import persistencia.*;
 
 public class GestioLlibres extends HttpServlet {
+
     LlibreDao dao;
     private Connection con;
     private ConfiguracioConnexio dbCon;
-
+    private List<Llibre> listaLibros;
+    private Llibre libro;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -21,6 +24,7 @@ public class GestioLlibres extends HttpServlet {
                 this.getInitParameter("usuari"), this.getInitParameter("contrasenya"));
         con = dbCon.getConnexio();
         dao = new LlibreDao(con);
+        listaLibros = new ArrayList();
     }
 
     /**
@@ -35,7 +39,7 @@ public class GestioLlibres extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       // LlibreDao dao = new LlibreDao(con);
+        // LlibreDao dao = new LlibreDao(con);
         String resposta;
 
         String action = request.getParameter("accio");
@@ -46,7 +50,12 @@ public class GestioLlibres extends HttpServlet {
                 anarAPagina("afegir.jsp", request, response);
                 break;
             case "cercarTots":
-                System.out.println("Hola estoy dentro del switch");
+                cercarTots();
+                anarAPagina("cercarTots.jsp", request, response);
+                break;
+            case "cercarTitol":
+                libro = cercarLlibreTitol(request, response);
+                //request.setAttribute("cercarTitol","");
                 anarAPagina("cercarTots.jsp", request, response);
                 break;
         }
@@ -116,8 +125,12 @@ public class GestioLlibres extends HttpServlet {
         }
     }
 
+    public Llibre getLibro() {
+        return libro;
+    }
+
     private String afegirLLibre(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        
+
         String isbn, titol, autor, editorial, any, estok;
         int anyo, estoc;
         boolean validar = true;
@@ -149,9 +162,22 @@ public class GestioLlibres extends HttpServlet {
         return resposta;
     }
 
-    public List<Llibre> cercarTots() {
-        List<Llibre> listaLibros = dao.cercarTots();
-        System.out.println(listaLibros.size());
+    private Llibre cercarLlibreTitol(HttpServletRequest request, HttpServletResponse response) {
+        String titol;
+        Llibre llibre;
+        if ((titol = request.getParameter("titol_")).matches("[a-zA-Z]")) {
+            llibre = dao.cercarPerTitol(titol);
+        } else {
+            llibre = null;
+        }
+        return llibre;
+    }
+
+    public List<Llibre> getListaLibros() {
         return listaLibros;
+    }
+
+    private void cercarTots() {
+        listaLibros = dao.cercarTots();
     }
 }

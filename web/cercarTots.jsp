@@ -17,12 +17,14 @@
         <ul>
             <%      
               GestioLlibres g = new GestioLlibres();
-              List<Llibre> llibres = g.cercarTots();
+              List<Llibre> llibres = g.getListaLibros();
                 //listado de libros
                 for (Llibre l : llibres) {
                     out.println("<li>"+l.getAutor() +"  "+l.getEditorial()+"  "+l.getIsbn()+"  "+l.getTitol()+"  "+l.getAnyEdicio()+"  "+l.getEstoc()+"</li>");
                 }
             %>
+            <% String resposta = (String) request.getAttribute("cercarTots");%>
+             <a ><%=(resposta == null) ? "" : resposta%> </a>
         </ul>
     </body>
 </html>

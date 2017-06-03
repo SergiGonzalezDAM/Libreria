@@ -23,15 +23,15 @@ public class LlibreDao {
             pt.setString(1, llib.getTitol());
             pt.setString(2, llib.getAutor());
             pt.setInt(3, llib.getAnyEdicio());
-            pt.setString(4, llib.getIsbn());            
-            pt.setString(5, llib.getEditorial());            
+            pt.setString(4, llib.getIsbn());
+            pt.setString(5, llib.getEditorial());
             pt.setInt(6, llib.getEstoc());
 
             if (pt.executeUpdate() == 0) {
                 afegit = false;
             }
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage()+"error");
+            System.err.println(ex.getMessage() + "error");
             afegit = false;
         } finally {
             tancarRecurs(pt);
@@ -39,8 +39,8 @@ public class LlibreDao {
         return afegit;
     }
 
-    public Llibre cercarPerISBN(String isbn) {
-        String consulta = "SELECT * FROM LLIBRE WHERE isbn='" + isbn + "'";
+    public Llibre cercarPerTitol(String titol) {
+        String consulta = "SELECT * FROM LLIBRE WHERE titol='" + titol + "'";
         Statement st;
         ResultSet rs;
         Llibre llib = null;
