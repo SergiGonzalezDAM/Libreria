@@ -4,7 +4,7 @@
     Author     : ALUMNEDAM
 --%>
 
-<%@page import="control.GestioLlibres"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="model.Llibre"%>
 <%@page import="java.util.List"%>
 <html>
@@ -13,18 +13,17 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@ include file="myHeader.html" %>
         <h1>Llibres existents:</h1>
+        <%List<Llibre> llibres = (List<Llibre>) request.getAttribute("cercarTots");%>
         <ul>
-            <%      
-              GestioLlibres g = new GestioLlibres();
-              List<Llibre> llibres = g.getListaLibros();
+            <%
                 //listado de libros
-                for (Llibre l : llibres) {
-                    out.println("<li>"+l.getAutor() +"  "+l.getEditorial()+"  "+l.getIsbn()+"  "+l.getTitol()+"  "+l.getAnyEdicio()+"  "+l.getEstoc()+"</li>");
+                for (Llibre l : llibres) 
+                {
+                    out.println("<li>" + l.getAutor() + "  " + l.getEditorial() + "  " + l.getIsbn() + "  " + l.getTitol() + "  " + l.getAnyEdicio() + "  " + l.getEstoc() + "</li>");
                 }
             %>
-            <% String resposta = (String) request.getAttribute("cercarTots");%>
-             <a ><%=(resposta == null) ? "" : resposta%> </a>
         </ul>
     </body>
 </html>

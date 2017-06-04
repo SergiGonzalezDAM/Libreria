@@ -40,7 +40,7 @@ public class LlibreDao {
     }
 
     public Llibre cercarPerTitol(String titol) {
-        String consulta = "SELECT * FROM LLIBRE WHERE titol='" + titol + "'";
+        String consulta = "SELECT * FROM llibre WHERE titol='" + titol + "'";
         Statement st;
         ResultSet rs;
         Llibre llib = null;
@@ -78,6 +78,21 @@ public class LlibreDao {
             System.out.println(ex.getMessage());
         }
         return llista;
+    }
+
+    public boolean eliminarLlibre(String isbn) {
+        String consulta = " DELETE FROM llibre WHERE isbn='" + isbn + "'";
+        System.out.println(consulta);
+        Statement st;
+        Boolean rs = false;
+        try {
+            st = con.createStatement();
+            rs = st.executeUpdate(consulta) != 0;
+            st.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return rs;
     }
 
     private void tancarRecurs(AutoCloseable r) {

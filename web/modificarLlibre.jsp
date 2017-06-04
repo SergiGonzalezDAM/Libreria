@@ -1,7 +1,7 @@
 <%-- 
-    Document   : cercarTitol
-    Created on : 01-jun-2017, 17:32:20
-    Author     : ALUMNEDAM
+    Document   : modificarLlibre
+    Created on : 04-jun-2017, 22:30:43
+    Author     : Sergi
 --%>
 
 <%@page import="model.Llibre"%>

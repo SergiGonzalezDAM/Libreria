@@ -16,6 +16,7 @@ public class GestioLlibres extends HttpServlet {
     private ConfiguracioConnexio dbCon;
     private List<Llibre> listaLibros;
     private Llibre libro;
+
     @Override
     public void init() throws ServletException {
         super.init();
@@ -51,12 +52,18 @@ public class GestioLlibres extends HttpServlet {
                 break;
             case "cercarTots":
                 cercarTots();
+                request.setAttribute("cercarTots", listaLibros);
                 anarAPagina("cercarTots.jsp", request, response);
                 break;
             case "cercarTitol":
                 libro = cercarLlibreTitol(request, response);
-                //request.setAttribute("cercarTitol","");
-                anarAPagina("cercarTots.jsp", request, response);
+                request.setAttribute("cercarTitol", libro);
+                anarAPagina("cercarTitol.jsp", request, response);
+                break;
+            case "eliminarLlibre":
+                resposta = eliminarLlibre(request, response);
+                request.setAttribute("resposta", resposta);
+                anarAPagina("eliminarLlibre.jsp", request, response);
                 break;
         }
 
@@ -125,10 +132,6 @@ public class GestioLlibres extends HttpServlet {
         }
     }
 
-    public Llibre getLibro() {
-        return libro;
-    }
-
     private String afegirLLibre(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
         String isbn, titol, autor, editorial, any, estok;
@@ -153,7 +156,6 @@ public class GestioLlibres extends HttpServlet {
         } else {
             anyo = Integer.parseInt(any);
             estoc = Integer.parseInt(estok);
-            //dao = new LlibreDao(con);
             if (!dao.afegir(new Llibre(titol, autor, anyo, isbn, editorial, estoc))) {
                 resposta = "Error, no s'ha afegir";
             }
@@ -162,19 +164,25 @@ public class GestioLlibres extends HttpServlet {
         return resposta;
     }
 
+    private String eliminarLlibre(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String resposta = "Error al eliminar";
+        if (dao.eliminarLlibre(request.getParameter("isbn_"))) {
+            resposta = "Llibre eliminat";
+        }
+        return resposta;
+    }
+
     private Llibre cercarLlibreTitol(HttpServletRequest request, HttpServletResponse response) {
         String titol;
         Llibre llibre;
-        if ((titol = request.getParameter("titol_")).matches("[a-zA-Z]")) {
-            llibre = dao.cercarPerTitol(titol);
-        } else {
-            llibre = null;
-        }
+        titol = request.getParameter("titol_");
+        System.out.println("TITULO: " + titol);
+        //if ((titol = request.getParameter("titol_")).matches("[a-z]")) {
+        llibre = dao.cercarPerTitol(titol);
+        // } else {
+        //  llibre = null;
+        // }
         return llibre;
-    }
-
-    public List<Llibre> getListaLibros() {
-        return listaLibros;
     }
 
     private void cercarTots() {

@@ -13,6 +13,8 @@
 
     <a href='GestioLlibres?accio=cercarTots'>LLISTAR TOTS ELS LLIBRES</a><br><br>
     <a href='cercarTitol.jsp'>LLISTAR PER TITOL</a><br><br>
+    <a href='eliminarLlibre.jsp'>ELIMINAR LLIBRE</a><br><br>
+    <a href='modificarLlibre.jsp'>ELIMINAR LLIBRE</a><br><br>
     <p>&nbsp;</p>
     <%@ include file="myFooter.html" %>
 </body>
