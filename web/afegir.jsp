@@ -10,7 +10,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-   
+
 
         <%@ include file="myHeader.html" %>
 
@@ -44,16 +44,16 @@
                     <td><input type="Text" name="estoc_" size="3"></td>
                 </tr>
                 <tr>
-                   <td colspan="2" align="center"><input type="Submit" value="Afegir"></td>
+                    <td colspan="2" align="center"><input type="Submit" value="Afegir"></td>
                 </tr>                
 
             </table>   
 
             <% String resposta = (String) request.getAttribute("afegit");%>
-             <a ><%=(resposta == null) ? "" : resposta%> </a>
+            <a ><%=(resposta == null) ? "" : resposta%> </a>
 
         </form>
-
+        <%@ include file="myFooter.html" %>
 
     </body>
 </html>

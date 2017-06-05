@@ -62,8 +62,13 @@ public class GestioLlibres extends HttpServlet {
                 break;
             case "eliminarLlibre":
                 resposta = eliminarLlibre(request, response);
-                request.setAttribute("resposta", resposta);
+                request.setAttribute("eliminarLlibre", resposta);
                 anarAPagina("eliminarLlibre.jsp", request, response);
+                break;
+            case "modificarLlibre":
+                resposta  = modificarLlibre(request, response);
+                request.setAttribute("modificarLlibre", resposta);
+                anarAPagina("modificarLlibre.jsp", request, response);
                 break;
         }
 
@@ -164,6 +169,30 @@ public class GestioLlibres extends HttpServlet {
         return resposta;
     }
 
+    private String modificarLlibre(HttpServletRequest request, HttpServletResponse response) {
+        String isbn, titol, autor, editorial, any, estok;
+        int anyo, estoc;
+        String resposta = "";
+        if (!(isbn = request.getParameter("isbn_")).matches("[0-9]{13}")) {
+            resposta = "ISBN incorrecto, 13 dígitos";
+        } else if (!(any = request.getParameter("anyo_")).matches("^[1-9][0-9]{1,3}")) {
+            resposta = "Año de edición incorrecto";
+        } else if (!(estok = request.getParameter("estoc_")).matches("[0-9]{1,3}")) {
+            resposta = "Estoc no válido";
+        } else if ((titol = request.getParameter("titol_")) == null
+                || (autor = request.getParameter("autor_")) == null
+                || (editorial = request.getParameter("editorial_")) == null) {
+            resposta = "campos vacios";
+        } else {
+            anyo = Integer.parseInt(any);
+            estoc = Integer.parseInt(estok);
+            if (!dao.modificarLlibre(new Llibre(titol, autor, anyo, isbn, editorial, estoc))) {
+                resposta = "Error, no se ha añadido";
+            }
+        }
+        return resposta;
+    }
+
     private String eliminarLlibre(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String resposta = "Error al eliminar";
         if (dao.eliminarLlibre(request.getParameter("isbn_"))) {
@@ -177,11 +206,11 @@ public class GestioLlibres extends HttpServlet {
         Llibre llibre;
         titol = request.getParameter("titol_");
         System.out.println("TITULO: " + titol);
-        //if ((titol = request.getParameter("titol_")).matches("[a-z]")) {
-        llibre = dao.cercarPerTitol(titol);
-        // } else {
-        //  llibre = null;
-        // }
+        if ((titol = request.getParameter("titol_")) != null) {
+            llibre = dao.cercarPerTitol(titol);
+        } else {
+            llibre = null;
+        }
         return llibre;
     }
 

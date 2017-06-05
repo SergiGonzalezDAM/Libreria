@@ -14,47 +14,47 @@
     </head>
     <body>
         <%@ include file="myHeader.html" %>
-        <% Llibre llibre = (Llibre) request.getAttribute("cercarTitol");%>
-        <form action="GestioLlibres?accio=cercarTitol" method="post">            
+
+        <form action="GestioLlibres?accio=modificarLlibre" method="post">            
 
             <center><b>Dades del llibre:</b></center>
             <br><br>
             <table cellspacing="2" cellpadding="2" border="0" align="center">
                 <tr>
                     <td align="right">ISBN</td>
-                    <td><input type="Text" name="isbn_" size="13" value="<%=llibre == null ? "" : llibre.getIsbn()%>" readonly></td>
+                    <td><input type="Text" name="isbn_" size="13" value=""></td>
                 </tr>
                 <tr>
                     <td align="right">Autor:</td>
-                    <td><input type="Text" name="autor_" size="30" value="<%=llibre == null ? "" : llibre.getAutor()%>" readonly></td>
+                    <td><input type="Text" name="autor_" size="30" value=""></td>
                 </tr>
                 <tr>
                     <td align="right">Editorial:</td>
-                    <td><input type="Text" name="editorial_" size="20" value="<%=llibre == null ? "" : llibre.getEditorial()%>" readonly></td> 
+                    <td><input type="Text" name="editorial_" size="20" value=""</td> 
                 </tr>               
                 <tr>
                     <td align="right">Any edició:</td>
-                    <td><input type="Text" name="anyo_" size="4" value="<%=llibre == null ? "" : llibre.getAnyEdicio()%>" readonly></td>
+                    <td><input type="Text" name="anyo_" size="4" value=""></td>
                 </tr>
                 <tr>
                     <td align="right">Estoc:</td>
-                    <td><input type="Text" name="estoc_" size="3" value="<%=llibre == null ? "" : llibre.getEstoc()%>" readonly></td>
+                    <td><input type="Text" name="estoc_" size="3" value=""></td>
                 </tr>
                 <tr>
                     <td align="right">Títol:</td>
-                    <td><input type="Text" name="titol_" size="30" value="<%=llibre == null ? "" : llibre.getTitol()%>"></td>
-                    <td align="center"><input type="Submit" value="Buscar"></td>
+                    <td><input type="Text" name="titol_" size="30" value=""></td>
+                    <td align="center"><input type="Submit" value="Modificar"></td>
                 </tr>               
 
             </table>   
 
 
-
+            <% String resposta = (String) request.getAttribute("modificarLlibre");
+            %>
+            <a ><%=(resposta == null) ? "" : resposta%> </a>
         </form>
-        <br>
-        <br>
-        <a href="index.jsp">Volver</a>
 
+        <%@ include file="myFooter.html" %>
 
     </body>
 </html>

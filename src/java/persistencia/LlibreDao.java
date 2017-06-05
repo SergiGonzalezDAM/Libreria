@@ -38,6 +38,25 @@ public class LlibreDao {
         }
         return afegit;
     }
+        public boolean modificarLlibre(Llibre llib) {
+        boolean afegit = true;
+        PreparedStatement pt = null;
+        String sentencia = "UPDATE LLIBRE SET TITOL = '"+llib.getTitol()+"',AUTOR = '"+llib.getAutor()+
+                "',ANYO = '"+llib.getAnyEdicio()+"',EDITORIAL = '"+llib.getEditorial()+"',ESTOC = '"+llib.getEstoc()+"'"
+                + " WHERE isbn = " + llib.getIsbn();
+        try {
+            pt = con.prepareStatement(sentencia);
+            if (pt.executeUpdate() == 0) {
+                afegit = false;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage() + "error");
+            afegit = false;
+        } finally {
+            tancarRecurs(pt);
+        }
+        return afegit;
+    }
 
     public Llibre cercarPerTitol(String titol) {
         String consulta = "SELECT * FROM llibre WHERE titol='" + titol + "'";

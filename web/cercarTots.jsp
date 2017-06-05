@@ -19,11 +19,11 @@
         <ul>
             <%
                 //listado de libros
-                for (Llibre l : llibres) 
-                {
+                for (Llibre l : llibres) {
                     out.println("<li>" + l.getAutor() + "  " + l.getEditorial() + "  " + l.getIsbn() + "  " + l.getTitol() + "  " + l.getAnyEdicio() + "  " + l.getEstoc() + "</li>");
                 }
             %>
         </ul>
+        <%@ include file="myFooter.html" %>
     </body>
 </html>

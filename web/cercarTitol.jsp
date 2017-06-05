@@ -53,7 +53,7 @@
         </form>
         <br>
         <br>
-        <a href="index.jsp">Volver</a>
+        <%@ include file="myFooter.html" %>
 
 
     </body>
